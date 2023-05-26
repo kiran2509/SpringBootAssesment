@@ -58,6 +58,18 @@ public class TaskController {
         return null;
     }
 
+    @PutMapping("/param/{id}")
+    public String updateStatusById(@PathVariable int id, @RequestBody Task currentTask){
+
+        Task task = taskList.stream().filter(t -> t.getTaskId() == id).findFirst().orElse(null);
+        if(task != null){
+            String str = task.getTaskStatus();
+            task.setTaskStatus(currentTask.getTaskStatus());
+            return "Task Status is changed from  "+ str +" to  "+ task.getTaskStatus();
+        }
+        return "Task with id is not present";
+    }
+
     @DeleteMapping("{id}")
     public String deleteTaskById(@PathVariable int id){
 
